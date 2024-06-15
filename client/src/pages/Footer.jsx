@@ -7,7 +7,7 @@ function Footer(){
                     <footer className="py-lg-4 py-md-3 py-sm-3 py-3">
           <div className="container py-lg-5 py-md-5 py-sm-4 py-3">
             <div className="footer-w3layouts-head text-center">
-              <h2><a href="index.html">PWR</a></h2>
+              <h2><a href="/home">PWR</a></h2>
             </div>
             <div className="social-icons mt-lg-5 mt-md-4 mt-3 text-center">
               <ul>
@@ -20,7 +20,7 @@ function Footer(){
             </div>
             <div className="bottem-wthree-footer text-center pt-md-4 pt-3">
               <p>
-                2024 Parki we Wroclawiu by <a href="http://github.com/bulg0t" target="_blank"> Bulg0t</a>
+                2024 Parki we Wroclawiu by<a href="http://github.com/bulg0t" target="_blank"> Bulg0t</a>
               </p>
             </div>
             <div className="text-center">

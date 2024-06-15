@@ -9,16 +9,31 @@ function Login() {
     const navigate = useNavigate()
 
     const handleSubmit = (e) => {
-        e.preventDefault()
-        axios.post('http://localhost:3001/login', {email, password})
-        .then(result => {
-            console.log(result)
-            if(result.data =="Success"){
-                navigate('/home')
-            }
+        e.preventDefault();
+        console.log('Submitting login with values:', { email, password });
+    
+        axios.post('http://localhost:3001/login', { email, password })
+          .then(result => {
+            console.log('Login successful:', result.data);
+            localStorage.setItem('token', result.data.token);
+            localStorage.setItem('email', result.data.email);
+            navigate('/home'); // Replace with your desired route after login
+          })
+          .catch(err => {
+            console.error('Error during login:', err.message);
+            console.error('Stack trace:', err.stack);
+            setError(err.response?.data?.error || 'Login failed. Please try again.');
+          });
+        // e.preventDefault()
+        // axios.post('http://localhost:3001/login', {email, password})
+        // .then(result => {
+        //     console.log(result)
+        //     if(result.data =="Success"){
+        //         navigate('/home')
+        //     }
 
-        })
-        .catch(err=>console.log(err))
+        // })
+        // .catch(err=>console.log(err))
     }
     return (
         <div className="d-flex justify-content-center align-items-center bg-secondary vh-100">
@@ -55,7 +70,7 @@ function Login() {
                     </button>
                     </form>
                 <p>Already Have an Account</p>
-                <Link to="/signup" className="btn btn-default border w-100 bg-light rounded-0 text-decoration-none">
+                <Link to="/register" className="btn btn-default border w-100 bg-light rounded-0 text-decoration-none">
                     Sign Up
                 </Link>
             </div>

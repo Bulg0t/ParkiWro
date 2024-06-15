@@ -9,6 +9,9 @@ import Service from './pages/Service'
 import Contact from './pages/Contact'
 import Single from './pages/single'
 import Gallery from './pages/Gallery'
+import Blog from './pages/Blog'
+import AssignBadge from './pages/AssignBadge'; 
+import UserBadges from './pages/UserBadges'; 
 
 function App() {
 return (
@@ -22,7 +25,11 @@ return (
   <Route path='/contact' element={<Contact/>}></Route>
   <Route path='/single' element={<Single/>}></Route>
   <Route path='/gallery' element={<Gallery/>}></Route>
+  <Route path='/assign-badge' element={<AssignBadge/>}></Route>
+  <Route path='/user-badges' element={<UserBadges/>}></Route> 
   {/* <Route path='/api/parks' element={<About/>}></Route> */}
+  <Route path='/blog/' element={<Blog/>}></Route>
+
 
 
 

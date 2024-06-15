@@ -86,7 +86,7 @@ function Index() {
 
             <div className="row">
               <div className="col-lg-7 col-md-6 collection-w3layouts">
-                <h4> Prawa I Obowiazki</h4>
+                <h4> Prawa i Obowiazki</h4>
                 <p className="mt-2">Użytkownicy muszą korzystać z aplikacji zgodnie z prawem i regulaminem, a Operator zapewnia prawidłowe działanie aplikacji oraz ochronę danych osobowych. W przypadku naruszenia regulaminu, Operator może usunąć konto użytkownika. Dane osobowe są chronione zgodnie z przepisami prawa, a użytkownik ma prawo do ich wglądu, poprawiania i usunięcia.</p>
                 <div className="view-buttn mt-lg-4 mt-3">
                   <a href="/regulamin" className="">Poczytaj wiecej</a>

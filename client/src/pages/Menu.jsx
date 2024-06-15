@@ -1,7 +1,15 @@
 import React, { Fragment } from 'react';
-import { Link } from 'react-router-dom';
+import { Link, useNavigate } from 'react-router-dom';
 
 function Menu() {
+    const navigate = useNavigate();
+
+    const handleLogout = () => {
+      localStorage.removeItem('token');
+      localStorage.removeItem('email');
+      navigate('/login');
+    };
+    const email = localStorage.getItem('email');
     return (
         <Fragment>
             <div className="headder-top">
@@ -14,6 +22,9 @@ function Menu() {
                     <label for="drop" className="toggle">Menu</label>
                     <input type="checkbox" id="drop" />
                     <ul className="menu mt-2">
+                    <li className="nav-item">
+              <span className="navbar-text mr-3">{email}</span>
+            </li>
                         <li className="active">
                         <Link to="/home">Strona Glowna</Link>
                             </li>
@@ -31,7 +42,7 @@ function Menu() {
                             <input type="checkbox" id="drop-2" />
                             <ul>
                                 <li>
-                                <Link to="/gallery">Galeria zdjec</Link>
+                                <Link to="/ranking">Ranking</Link>
                                     </li>
                                 <li>
                                 <Link to="/blog">Blog</Link>
@@ -39,8 +50,8 @@ function Menu() {
                             </ul>
                         </li>
                         <li>
-                        <Link to="/contact">Contact Us</Link>
-                            </li>
+                        <button className="btn btn-outline-danger" onClick={handleLogout}>Logout</button>
+                        </li>
                     </ul>
                 </nav>
 
