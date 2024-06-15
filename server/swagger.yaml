@@ -1,0 +1,373 @@
+openapi: 3.0.0
+info:
+  title: ParkiWro API
+  version: 1.0.0
+  description: Api dla aplikacji ParkiWro
+servers:
+  - url: http://localhost:3001/
+
+paths:
+  /register:
+    post:
+      summary: Register a new user
+      tags:
+        - Users
+      requestBody:
+        required: true
+        content:
+          application/json:
+            schema:
+              type: object
+              properties:
+                name:
+                  type: string
+                  example: John Doe
+                email:
+                  type: string
+                  example: john.doe@example.com
+                password:
+                  type: string
+                  example: "password123"
+      responses:
+        200:
+          description: User registered successfully
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/User'
+        400:
+          description: Bad request
+        500:
+          description: Internal server error
+
+  /login:
+    post:
+      summary: Login a user
+      tags:
+        - Users
+      requestBody:
+        required: true
+        content:
+          application/json:
+            schema:
+              type: object
+              properties:
+                email:
+                  type: string
+                  example: john.doe@example.com
+                password:
+                  type: string
+                  example: "password123"
+      responses:
+        200:
+          description: User logged in successfully
+          content:
+            application/json:
+              schema:
+                type: object
+                properties:
+                  token:
+                    type: string
+                  email:
+                    type: string
+                    example: john.doe@example.com
+        400:
+          description: Bad request
+        401:
+          description: Unauthorized
+        500:
+          description: Internal server error
+
+  /api/parks:
+    get:
+      summary: Get all parks
+      tags:
+        - Parks
+      security:
+        - bearerAuth: []
+      responses:
+        200:
+          description: List of parks
+          content:
+            application/json:
+              schema:
+                type: array
+                items:
+                  $ref: '#/components/schemas/Park'
+        500:
+          description: Internal server error
+
+  /api/park:
+    get:
+      summary: Get park by ID
+      tags:
+        - Parks
+      parameters:
+        - in: query
+          name: id
+          schema:
+            type: string
+          required: true
+          description: The ID of the park
+      responses:
+        200:
+          description: Park details
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/Park'
+        500:
+          description: Internal server error
+
+  /blog:
+    get:
+      summary: Get posts by park ID
+      tags:
+        - Posts
+      parameters:
+        - in: query
+          name: id
+          schema:
+            type: string
+          required: true
+          description: The ID of the park
+      responses:
+        200:
+          description: List of posts
+          content:
+            application/json:
+              schema:
+                type: object
+                properties:
+                  posts:
+                    type: array
+                    items:
+                      $ref: '#/components/schemas/Post'
+                  users:
+                    type: array
+                    items:
+                      $ref: '#/components/schemas/User'
+        500:
+          description: Internal server error
+
+  /posts:
+    post:
+      summary: Create a new post
+      tags:
+        - Posts
+      security:
+        - bearerAuth: []
+      requestBody:
+        required: true
+        content:
+          application/json:
+            schema:
+              type: object
+              properties:
+                title:
+                  type: string
+                  example: My Park Visit
+                content:
+                  type: string
+                  example: It was a wonderful day at the park.
+                parkId:
+                  type: string
+      responses:
+        200:
+          description: Post created successfully
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/Post'
+        400:
+          description: Bad request
+        500:
+          description: Internal server error
+
+  /posts/{postId}/comments:
+    post:
+      summary: Add a comment to a post
+      tags:
+        - Comments
+      security:
+        - bearerAuth: []
+      parameters:
+        - in: path
+          name: postId
+          schema:
+            type: string
+          required: true
+          description: The ID of the post
+      requestBody:
+        required: true
+        content:
+          application/json:
+            schema:
+              type: object
+              properties:
+                text:
+                  type: string
+                  example: This is a comment.
+      responses:
+        200:
+          description: Comment added successfully
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/Post'
+        400:
+          description: Bad request
+        404:
+          description: Post not found
+        500:
+          description: Internal server error
+
+  /api/badges/assign:
+    post:
+      summary: Assign a badge to the user
+      tags:
+        - Badges
+      security:
+        - bearerAuth: []
+      requestBody:
+        required: true
+        content:
+          application/json:
+            schema:
+              type: object
+              properties:
+                qrCode:
+                  type: string
+                  example: "QR1"
+      responses:
+        200:
+          description: Badge assigned successfully
+          content:
+            application/json:
+              schema:
+                type: object
+                properties:
+                  message:
+                    type: string
+                    example: Badge assigned successfully
+                  badge:
+                    $ref: '#/components/schemas/Badge'
+        400:
+          description: Bad request, badge already assigned or QR code not provided
+        404:
+          description: Badge not found
+        500:
+          description: Internal server error
+
+  /api/badges:
+    get:
+      summary: Get all badges assigned to the logged-in user
+      tags:
+        - Badges
+      security:
+        - bearerAuth: []
+      responses:
+        200:
+          description: List of badges assigned to the user
+          content:
+            application/json:
+              schema:
+                type: array
+                items:
+                  $ref: '#/components/schemas/Badge'
+        500:
+          description: Internal server error
+
+components:
+  schemas:
+    User:
+      type: object
+      properties:
+        _id:
+          type: string
+          example: "60d0fe4f5311236168a109ca"
+        name:
+          type: string
+          example: John Doe
+        email:
+          type: string
+          example: john.doe@example.com
+        password:
+          type: string
+          example: "$2b$10$abcdefghijklmnopqrstuv"
+  
+    Park:
+      type: object
+      properties:
+        _id:
+          type: string
+          example: "60d0fe4f5311236168a109ca"
+        name:
+          type: string
+          example: "Central Park"
+        description:
+          type: string
+          example: "A large public park in New York City."
+        location:
+          type: string
+          example: "New York, NY"
+        photo:
+          type: string
+          example: "https://example.com/photo.jpg"
+    
+    Post:
+      type: object
+      properties:
+        _id:
+          type: string
+          example: "60d0fe4f5311236168a109ca"
+        title:
+          type: string
+          example: "My Park Visit"
+        content:
+          type: string
+          example: "It was a wonderful day at the park."
+        userId:
+          type: string
+          example: "60d0fe4f5311236168a109cb"
+        parkId:
+          type: string
+          example: "60d0fe4f5311236168a109cc"
+        comments:
+          type: array
+          items:
+            type: object
+            properties:
+              text:
+                type: string
+                example: "This is a comment."
+              userId:
+                type: string
+                example: "60d0fe4f5311236168a109cb"
+    
+    Badge:
+      type: object
+      properties:
+        _id:
+          type: string
+          example: "60d0fe4f5311236168a109ca"
+        name:
+          type: string
+          example: "Parkowy Odkrywca"
+        description:
+          type: string
+          example: "Zeskanowanie QR kodu w dowolnym parku po raz pierwszy!"
+        qrCode:
+          type: string
+          example: "QR1"
+        userIds:
+          type: array
+          items:
+            type: string
+            example: "60d0fe4f5311236168a109cb"
+
+securitySchemes:
+  bearerAuth:
+    type: http
+    scheme: bearer
+    bearerFormat: JWT
