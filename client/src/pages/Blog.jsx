@@ -38,13 +38,15 @@ function Blog() {
     const token = localStorage.getItem('token');
 
     try {
-      const response = await axios.post('http://localhost:3001/posts', { title, content, parkId }, {
+      const comments = [];
+      const response = await axios.post('http://localhost:3001/posts', { title, content, parkId, comments }, {
         headers: {
           Authorization: `Bearer ${token}`
         }
       });
       setMessage('Post created successfully!');
-      setPosts([posts, response.data]); 
+      setPosts([response.data, ...posts]); // Nowy post na górze listy
+      console.log("kocham lewandowskiego", response.data);
       setTitle('');
       setContent('');
     } catch (error) {
@@ -66,7 +68,7 @@ function Blog() {
       });
       setMessage('Comment added successfully!');
       setPosts(posts.map(post => post._id === postId ? response.data : post));
-      setCommentText({ commentText, [postId]: '' }); 
+      setCommentText({ ...commentText, [postId]: '' }); 
     } catch (error) {
       setError('Failed to add comment');
       console.error('Error adding comment:', error);
@@ -85,38 +87,6 @@ function Blog() {
         <div className="banner-blog">
           <p className="banner-title">{park.name}</p>
         </div>
-        {posts.map((post) => {
-          const { title, content, userId, comments } = post;
-
-          return (
-            <div className="container-blog" key={post._id}>
-              <div className="post">
-                <h2>{title}</h2>
-                <p>{content}</p>
-                <p><strong>Autor:</strong> {getUserById(userId)}</p> 
-                <div className="comments">
-                  <h3>Komentarze:</h3>
-                  {comments.map((comment, index) => {
-                    const { text, userId } = comment;
-                    return (
-                      <div className="comment" key={index}>
-                        <p><strong>{getUserById(userId)}:</strong> {text}</p>
-                      </div>
-                    );
-                  })}
-                  <form onSubmit={(e) => handleCommentSubmit(post._id, e)}>
-                    <textarea
-                      placeholder="Dodaj komentarz..."
-                      value={commentText[post._id] || ''}
-                      onChange={(e) => setCommentText({ ...commentText, [post._id]: e.target.value })}
-                    />
-                    <button type="submit">Dodaj Komentarz</button>
-                  </form>
-                </div>
-              </div>
-            </div>
-          );
-        })}
 
         <div className="container-blog">
           <h2>Dodaj nowy post</h2>
@@ -145,6 +115,41 @@ function Blog() {
             <button type="submit" className="btn btn-primary">Dodaj Post</button>
           </form>
         </div>
+
+        {posts.map((post) => {
+          const { title, content, userId, comments } = post;
+          console.log(post)
+
+          return (
+            <div className="container-blog" key={post._id}>
+              <div className="post">
+                <h2>{title}</h2>
+                <p>{content}</p>
+                <p><strong>Autor:</strong> {getUserById(userId)}</p>
+                <div className="comments">
+                  <h3>Komentarze:</h3>
+                  {comments && comments.map((comment, index) => {
+                    const { text, userId } = comment;
+                    return (
+                      <div className="comment" key={index}>
+                        <p><strong>{getUserById(userId)}:</strong> {text}</p>
+                      </div>
+                    );
+                  })}
+
+                  <form onSubmit={(e) => handleCommentSubmit(post._id, e)}>
+                    <textarea
+                      placeholder="Dodaj komentarz..."
+                      value={commentText[post._id] || ''}
+                      onChange={(e) => setCommentText({ ...commentText, [post._id]: e.target.value })}
+                    />
+                    <button type="submit">Dodaj Komentarz</button>
+                  </form>
+                </div>
+              </div>
+            </div>
+          );
+        })}
       </div>
       <Footer />
     </Fragment>

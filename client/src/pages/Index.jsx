@@ -21,7 +21,6 @@ function Index() {
                 </p>
               </div>
               <div className="view-buttn mt-md-4 mt-sm-4 mt-3">
-                <a href="/single" className="btn">Read More</a>
               </div>
             </div>
           </div>
@@ -47,7 +46,6 @@ function Index() {
                   <p>Użytkownicy mogą przeglądać informacje o wszystkich parkach, brać udział w forach dedykowanych dla poszczególnych parków oraz zdobywać odznaki i punkty w rankingu za odwiedzone miejsca. </p>
                 </div>
                 <div className="view-buttn mt-lg-5 mt-md-4 mt-3">
-                  <a href="single.html" className=" scroll">Read More</a>
                 </div>
               </div>
             </div>
@@ -63,7 +61,6 @@ function Index() {
                 <h4> Postanowienia Ogolne</h4>
                 <p className="mt-2">Korzystanie z aplikacji oznacza akceptację regulaminu. Aplikacja służy do zbierania informacji o odwiedzonych parkach we Wrocławiu, umożliwiając skanowanie QR kodów, przeglądanie danych o parkach, udział w forach i zdobywanie odznak. Użytkownik jest zobowiązany do podania prawdziwych danych podczas rejestracji i ochrony swojego hasła.</p>
                 <div className="view-buttn mt-lg-4 mt-3">
-                  <a href="/regulamin" className="">Poczytaj wiecej</a>
                 </div>
               </div>
               <div className="col-lg-5 col-md-6">
@@ -79,7 +76,6 @@ function Index() {
                 <h4>Zasady Korzystania z Aplikacji</h4>
                 <p className="mt-2">Użytkownicy mogą skanować QR kody, aby potwierdzić wizytę w parku i zdobywać odznaki. Aplikacja pozwala przeglądać informacje o parkach i uczestniczyć w forach, gdzie tylko odwiedzający mogą publikować posty. Ranking użytkowników jest tworzony na podstawie liczby odwiedzonych parków.</p>
                 <div className="view-buttn mt-lg-4 mt-3">
-                  <a href="/regulamin" className="">Poczytaj Wiecej</a>
                 </div>
               </div>
             </div>
@@ -89,7 +85,6 @@ function Index() {
                 <h4> Prawa i Obowiazki</h4>
                 <p className="mt-2">Użytkownicy muszą korzystać z aplikacji zgodnie z prawem i regulaminem, a Operator zapewnia prawidłowe działanie aplikacji oraz ochronę danych osobowych. W przypadku naruszenia regulaminu, Operator może usunąć konto użytkownika. Dane osobowe są chronione zgodnie z przepisami prawa, a użytkownik ma prawo do ich wglądu, poprawiania i usunięcia.</p>
                 <div className="view-buttn mt-lg-4 mt-3">
-                  <a href="/regulamin" className="">Poczytaj wiecej</a>
                 </div>
               </div>
               <div className="col-lg-5 col-md-6">

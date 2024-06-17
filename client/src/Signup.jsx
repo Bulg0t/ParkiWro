@@ -25,20 +25,7 @@ function Signup() {
             setError(err.response?.data?.error || 'Registration failed. Please try again.');
           });
     };
-    // const [name, setName] = useState('')
-    // const [email, setEmail] = useState('')
-    // const [password, setPassword] = useState('')
-    // const navigate = useNavigate()
-
-    // const handleSubmit = (e) => {
-    //     e.preventDefault()
-    //     axios.post('http://localhost:3001/register', {name, email, password})
-    //     .then(result => {console.log(result)
-    //     navigate('/login')
-
-    //     })
-    //     .catch(err=>console.log(err))
-    // }
+  
     return (
         <div className="d-flex justify-content-center align-items-center bg-secondary vh-100">
             <div className="bg-white p-3 rounded w-25">

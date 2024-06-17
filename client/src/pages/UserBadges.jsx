@@ -1,9 +1,14 @@
-import React, { useEffect, useState } from 'react';
+import React, { useEffect, useState, Fragment } from 'react';
 import axios from 'axios';
+import AssignBadge from './AssignBadge';
+import { useNavigate } from 'react-router-dom';
+import Menu from './Menu';
+import Footer from './Footer';
 
 function UserBadges() {
   const [badges, setBadges] = useState([]);
   const [error, setError] = useState('');
+  const navigate = useNavigate();
 
   useEffect(() => {
     const fetchBadges = async () => {
@@ -16,7 +21,7 @@ function UserBadges() {
         });
         setBadges(response.data);
       } catch (error) {
-        setError('Failed to fetch badges');
+        setError('Nie posiadasz jeszcze żadnych odznak');
         console.error('Error fetching badges:', error);
       }
     };
@@ -25,19 +30,29 @@ function UserBadges() {
   }, []);
 
   return (
-    <div style={{ padding: '20px' }}>
-      <h2>Your Badges</h2>
-      {error && <div style={{ color: 'red' }}>{error}</div>}
-      {badges.length === 0 && <div>No badges assigned yet.</div>}
-      <div style={{ display: 'flex', flexDirection: 'column', gap: '10px' }}>
-        {badges.map((badge) => (
-          <div key={badge._id} style={{ border: '1px solid #ccc', padding: '10px', borderRadius: '5px' }}>
-            <h3>{badge.name}</h3>
-            <p>{badge.description}</p>
+    <Fragment>
+      <body>
+        <Menu />
+        <div style={{ padding: '20px' }}>
+          <button style={{ marginBottom: '50px' }} onClick={() => navigate('/home')}>Powrót do strony głównej</button>
+          <h2>Twoje Odznaki</h2><br/>
+          {error && <div style={{ color: 'red' }}>{error}</div>}
+          {badges.length === 0 && <div></div>}
+          <div style={{ display: 'flex', flexDirection: 'column', gap: '10px' }}>
+            {badges.map((badge) => (
+              <div key={badge._id} style={{ border: '1px solid #ccc', padding: '10px', borderRadius: '5px' }}>
+                <h3>{badge.name}</h3>
+                <p>{badge.description}</p>
+              </div>
+            ))}
           </div>
-        ))}
-      </div>
-    </div>
+          <br/><br/><br/><br/>
+          <h2>Dodaj nową odznakę</h2><br/>
+          <AssignBadge />
+        </div>
+        <Footer />
+      </body>
+    </Fragment>
   );
 }
 

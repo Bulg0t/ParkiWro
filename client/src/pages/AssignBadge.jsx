@@ -23,7 +23,7 @@ function AssignBadge() {
       setQrCode('');
       navigate('/odznaki');
     } catch (error) {
-      setError(error.response.data.error || 'Failed to assign badge');
+      setError(error.response.data.error || 'Nie posiadasz jeszcze zadnych odznak');
       setMessage('');
       console.error('Error assigning badge:', error);
     }
@@ -31,13 +31,12 @@ function AssignBadge() {
 
   return (
     <div>
-      <h2>Assign Badge</h2>
       {error && <div style={{ color: 'red' }}>{error}</div>}
       {message && <div style={{ color: 'green' }}>{message}</div>}
       <form onSubmit={handleSubmit}>
         <input 
           type="text" 
-          placeholder="Enter QR Code" 
+          placeholder="Wpisz QR Code" 
           value={qrCode} 
           onChange={(e) => setQrCode(e.target.value)} 
           required 
